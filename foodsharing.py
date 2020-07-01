@@ -4,7 +4,7 @@ import json
 
 
 def authorization():
-	login, password = '+7____', '____'
+	login, password = '+7_______', '_______'
 	vk_session = vk_api.VkApi(login, password)
 	try:
 		vk_session.auth(token_only = False)
@@ -26,8 +26,8 @@ def getinformation(vk):
 
 
 def write_json(data):
-	with open('information_from_group.json','w') as file:
-		json.dump(data, file, indent=2)#, ensure_ascii=False)
+	with open('information_from_group.json','w', encoding='utf-8') as file:
+		json.dump(data, file, indent=2, ensure_ascii=False)
 
 
 def main():
