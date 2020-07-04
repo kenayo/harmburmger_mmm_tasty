@@ -1,10 +1,11 @@
 import vk_api
 import requests
 import json
+import re
 
 
 def authorization():
-	login, password = '+7_______', '_______'
+	login, password = '+7___', '___'
 	vk_session = vk_api.VkApi(login, password)
 	try:
 		vk_session.auth(token_only = False)
@@ -14,27 +15,49 @@ def authorization():
 	return vk
 
 def getinformation(vk):
-	foodsharingroup = '-109125816'
-	gruop = vk.wall.get(owner_id=foodsharingroup, count=2)
+	foodsharingroupID = '-109125816'
+	gruop = vk.wall.get(owner_id=foodsharingroupID, count=2)
 	write_json(gruop)
-	# tools = vk_api.VkTools(vk_session)
-	# DOMAIN = 'sharingfood'
-	# wall = tools.get_all('wall.get', 5, {'domain': DOMAIN})
-	# write_json(wall.json())
-
-
+	return gruop["items"][1]["text"]
 
 
 def write_json(data):
 	with open('information_from_group.json','w', encoding='utf-8') as file:
 		json.dump(data, file, indent=2, ensure_ascii=False)
 
+# def read_json(data):
+# 	with open('information_from_group.json','w', encoding='utf-8') as file:
+# 		json.dump(data, file, indent=2, ensure_ascii=False)
+
+def addressparser(text):
+	addresspatterns = ['^м.\s*[а-яА-Я]', '^ул.\s*[а-яА-Я]',
+					'^пл.\s*[а-яА-Я]', '^Набережная\s[а-яА-Я]'
+					]
+	address = []
+	for pattern in addresspatterns:
+		address.extend(re.findall(pattern,text))
+		write_json(address)
+		return address
+
+def timeparser():
+	pass
+
+def geodata(address):
+	APIkey = '42604df8-0cd1-40c9-ad47-8a62f88fbfb1'
+	addressforrequest = '+'.join(address)
+	requestwithaddress = 'https://geocode-maps.yandex.ru/1.x/?apikey=' + APIkey + '&geocode=' + addressforrequest
+
+
+
+
+
 
 def main():
 	vk = authorization()
-	getinformation(vk)
-	# response = requests.get('https://api.vk.com/method/wall.get', params={'domain': DOMAIN})
-	# write_json(response.json())
+	text = getinformation(vk)
+	address = addressparser(text)
+	# geodata(address)
+
 
 
 
