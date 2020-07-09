@@ -46,6 +46,10 @@ def geodata(address):
 	APIkey = '42604df8-0cd1-40c9-ad47-8a62f88fbfb1'
 	addressforrequest = '+'.join(address)
 	requestwithaddress = 'https://geocode-maps.yandex.ru/1.x/?apikey=' + APIkey + '&geocode=' + addressforrequest
+	# print(requestwithaddress)
+	geodata = requests.get(requestwithaddress)
+	# print(geodata)
+	return geodata
 
 
 
@@ -56,7 +60,7 @@ def main():
 	vk = authorization()
 	text = getinformation(vk)
 	address = addressparser(text)
-	# geodata(address)
+	geodata(address)
 
 
 
