@@ -21,11 +21,11 @@ def start(message):
 
 
 def get_choice(message):
-	bot.send_message(text = 'В настоящее время предлагается: {}'.format('SELECT...'), chat_id = message.chat.id)
+	bot.send_message(text = 'В настоящее время по интересующим Вас продуктам предлагается: {}'.format('SELECT...'), chat_id = message.chat.id)
 
 def help(message):
 	if message.text == '/help':
-		bot.send_message(message.chat.id, '/find команда для поиска продуктов\
-			/choise команда для показа текущих вариантов')
+		bot.send_message(message.chat.id, '/find команда для поиска продуктов\n\
+/choice команда для показа текущих вариантов')
 
 bot.polling(none_stop=True, interval=0)

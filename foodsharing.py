@@ -2,6 +2,22 @@ import vk_api
 import requests
 import json
 import re
+import logging
+from sqlalchemy import create_engine
+
+
+
+logging.basicConfig(
+	level=logging.INFO,
+	format='%(name)s %(levelname)s %(asctime)s    '
+			'%(message)s',
+	datefmt='%I:%M:%S',
+	handlers=[
+        logging.FileHandler("foodsharing.log"),
+        # logging.StreamHandler()
+    ]
+)
+log = logging.getLogger()
 
 
 def authorization():
@@ -12,6 +28,7 @@ def authorization():
 	except vk_api.AuthError as error_msg:
 		print(error_msg)
 	vk = vk_session.get_api()
+	log.info("Vk session has been started login %s", login)
 	return vk
 
 def getinformation(vk):
@@ -52,7 +69,7 @@ def geodata(address):
 	return geodata
 
 
-
+engine = create_engine('postgresql+psycopg2://user:password@hostname/database_name')
 
 
 
