@@ -11,21 +11,32 @@ def start_message(message):
 
 @bot.message_handler(content_types=['text'])
 def start(message):
-	if message.text == '/find':
-		bot.send_message(text = 'Теперь я буду отслеживать в фудшеринге {} и сообщать о предложениях'.format(message.text), chat_id = message.chat.id)
-		# bot.register_next_step_handler(message, get_choice)
+	if message.text.startswith('/find'):
+		find(message)
 	if message.text == '/help':
 		help(message)
 	if message.text == '/choice':
 		get_choice(message)
+	if message.text == '/info':
+		get_info(message)
+
+def find(message):
+	bot.send_message(text = 'Теперь я буду отслеживать в фудшеринге {} и сообщать о предложениях'.format(message.text), chat_id = message.chat.id)
+	# bot.register_next_step_handler(message, get_choice)
+
 
 
 def get_choice(message):
 	bot.send_message(text = 'В настоящее время по интересующим Вас продуктам предлагается: {}'.format('SELECT...'), chat_id = message.chat.id)
 
 def help(message):
-	if message.text == '/help':
-		bot.send_message(message.chat.id, '/find команда для поиска продуктов\n\
-/choice команда для показа текущих вариантов')
+	bot.send_message(message.chat.id, '/find выбор поиска продуктов\n\
+/choice показ текущих вариантов по интересующим продуктам\n\
+/info информация о фудшеринге'
+)
+
+def get_info(message):
+		bot.send_message(message.chat.id, 'Фудшеринг - это ...'
+
 
 bot.polling(none_stop=True, interval=0)

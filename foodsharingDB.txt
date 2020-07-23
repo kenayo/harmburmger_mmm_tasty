@@ -1,9 +1,11 @@
 CREATE DATABASE foodsharing_db;
-CREATE USER test_user WITH password 'qwerty';
-GRANT ALL privileges ON DATABASE foodsharing_db TO test_user;
+CREATE USER foodsharing_user WITH password '___';
+psql \c foodsharing_db
+GRANT ALL privileges ON DATABASE foodsharing_db TO foodsharing_user;
 
 CREATE TABLE products
 (
-	Id SERIAL PRIMARY KEY,
-	Product CHARACTER VARYING(50),
+	id SERIAL PRIMARY KEY,
+	product CHARACTER VARYING(50),
+	all_message CHARACTER VARYING(500)
 );
